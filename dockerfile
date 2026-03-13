@@ -45,4 +45,4 @@ USER nonroot
 WORKDIR /app
 
 # Run the FastAPI application by default
-CMD ["fastapi", "run", "src/zenith/app/inference_endpoint.py", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["fastapi", "run", "src.zenith.app.inference_endpoint", "--host", "0.0.0.0", "--port", "8000"]
