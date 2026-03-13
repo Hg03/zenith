@@ -8,6 +8,9 @@ RUN apt-get update && \
         curl && \
     rm -rf /var/lib/apt/lists/*
 
+
+COPY --from=ghcr.io/j178/prek:v0.3.5 /prek /usr/local/bin/prek
+
 # Set working directory
 WORKDIR /zenith
 
@@ -20,6 +23,8 @@ ENV UV_PROJECT_ENVIRONMENT=.venv \
 
 # Install Python dependencies from pyproject.toml
 RUN uv sync --dev
+
+RUN prek install
 
 # Expose application port
 EXPOSE 8000
