@@ -1,0 +1,5 @@
+params:
+  linear_regression:
+    fit_intercept:
+      - True
+      - False

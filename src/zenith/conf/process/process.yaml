@@ -1,0 +1,4 @@
+strategies:
+  impute:
+    numeric: mean
+    categoric: most_frequent

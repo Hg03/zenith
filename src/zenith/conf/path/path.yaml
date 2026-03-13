@@ -1,0 +1,4 @@
+raw_data: data/raw/raw_data.parquet
+processed_data: data/processed/processed_data.parquet
+model: artifacts/models/model.joblib
+preprocessor: artifacts/preprocessor/preprocessor.joblib

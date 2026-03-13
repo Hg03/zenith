@@ -1,0 +1,11 @@
+features:
+  - x1
+  - x2
+target:
+  - y
+numeric:
+  - x1
+categoric:
+  - x2
+ordinal:
+  - x2

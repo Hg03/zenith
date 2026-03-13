@@ -1,0 +1,6 @@
+defaults:
+  - path: path.yaml
+  - attrs: attrs.yaml
+  - process: process.yaml
+  - model: model.yaml
+  - steps: steps.yaml
