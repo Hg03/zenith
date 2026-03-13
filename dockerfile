@@ -1,48 +1,29 @@
-# An example using multi-stage image builds to create a final image without uv.
+FROM ghcr.io/astral-sh/uv:python3.13-bookworm
 
-# First, build the application in the `/app` directory.
-# See `Dockerfile` for details.
-FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS builder
-ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
+# Install system packages
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        git \
+        curl && \
+    rm -rf /var/lib/apt/lists/*
 
+# Set working directory
+WORKDIR /zenith
 
-# Disable Python downloads, because we want to use the system interpreter
-# across both images. If using a managed Python version, it needs to be
-# copied from the build image into the final image; see `standalone.Dockerfile`
-# for an example.
-ENV UV_PYTHON_DOWNLOADS=0
+# Copy project files
+COPY . .
 
-WORKDIR /app
-RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --locked --no-install-project
-COPY . /app
-RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --locked
+# Configure uv to use a .venv in the workdir and add it to PATH
+ENV UV_PROJECT_ENVIRONMENT=.venv \
+    PATH="/zenith/.venv/bin:${PATH}"
 
+# Install Python dependencies from pyproject.toml
+RUN uv sync --dev
 
-# Then, use a final image without uv
-FROM python:3.13-slim-bookworm
-# It is important to use the image that matches the builder, as the path to the
-# Python executable must be the same, e.g., using `python:3.11-slim-bookworm`
-# will fail.
+# Expose application port
+EXPOSE 8000
 
-# Setup a non-root user
-RUN groupadd --system --gid 999 nonroot \
- && useradd --system --gid 999 --uid 999 --create-home nonroot
-
-# Copy the application from the builder
-COPY --from=builder --chown=nonroot:nonroot /app /app
-
-# Place executables in the environment at the front of the path
-ENV PATH="/app/.venv/bin:$PATH"
-
-# Use the non-root user to run our application
-USER nonroot
-
-# Use `/app` as the working directory
-WORKDIR /app
-
-# Run the FastAPI application by default
-CMD ["fastapi", "run", "src.zenith.app.inference_endpoint", "--host", "0.0.0.0", "--port", "8000"]
+# Run FastAPI with uvicorn
+# CMD ["fastapi", "dev", "app/main.py", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["/bin/bash"]
