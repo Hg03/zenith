@@ -2,6 +2,8 @@
 
 ## How I did setup
 
+- Firstly, if you don't want the barebone step. Just clone the repo, build the docker container and attach your visual studio code. If interested to build it from initial stages. Get to the next point.
+- Keep `uv` installed as a prerequisite.
 - `uv init --package zenith`
 - Added required folder and initial code.
 - Added required tools to format, lint and pre-commit. For tooling, I did the next point
