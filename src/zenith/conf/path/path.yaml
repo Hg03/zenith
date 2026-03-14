@@ -1,4 +1,7 @@
 raw_data: data/raw/raw_data.parquet
-processed_data: data/processed/processed_data.parquet
+processed_X_train: data/processed/processed_X_train.parquet
+processed_X_test: data/processed/processed_X_test.parquet
+processed_y_train: data/processed/processed_y_train.parquet
+processed_y_test: data/processed/processed_y_test.parquet
 model: artifacts/models/model.joblib
-preprocessor: artifacts/preprocessor/preprocessor.joblib
+preprocessor: artifacts/preprocessor/preprocessor.skops
