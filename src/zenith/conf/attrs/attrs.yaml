@@ -2,7 +2,7 @@ features:
   - x1
   - x2
 target:
-  - y
+  - mental_state
 numeric:
   - x1
 categoric:

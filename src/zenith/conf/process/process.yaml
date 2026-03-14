@@ -1,3 +1,6 @@
+raw_data_table_name: raw
+batch_size: 500
+offset: 0
 strategies:
   impute:
     numeric: mean
