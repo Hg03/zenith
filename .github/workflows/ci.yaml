@@ -28,6 +28,6 @@ jobs:
       - name: Run training script
         # We use 'uv run' to ensure the script uses the environment created by 'uv sync'
         run: uv run python src/zenith/app/training_endpoint.py
-        # env:
-        #   SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-        #   SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
