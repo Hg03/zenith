@@ -1,6 +1,6 @@
 from sklearn.model_selection import train_test_split
-from skrub import Cleaner, TableVectorizer
 from zenith.scripts.utils import save_assets
+from skrub import Cleaner, TableVectorizer
 from sklearn.pipeline import Pipeline
 from omegaconf import DictConfig
 import polars as pl
@@ -22,8 +22,8 @@ def features_(config: DictConfig, raw_data: pl.DataFrame) -> pl.DataFrame:
     ).set_output(transform="polars")
     processed_X_train = preprocessor.fit_transform(X_train)
     processed_X_test = preprocessor.transform(X_test)
-
     save_assets(processed_X_train, config.path.processed_X_train, "parquet")
     save_assets(processed_X_test, config.path.processed_X_test, "parquet")
     save_assets(y_train, config.path.processed_y_train, "parquet")
     save_assets(y_test, config.path.processed_y_test, "parquet")
+    save_assets(preprocessor, config.path.preprocessor, "model")
