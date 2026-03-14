@@ -1,7 +1,12 @@
 raw_data_table_name: raw
 batch_size: 500
+test_size: 0.33
 offset: 0
 strategies:
   impute:
     numeric: mean
     categoric: most_frequent
+  encoding_map:
+    At_Risk: 2
+    Stressed: 1
+    Healthy: 0

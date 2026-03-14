@@ -1,6 +1,14 @@
 features:
-  - x1
-  - x2
+  - age
+  - daily_screen_time_min
+  - platform
+  - social_media_time_min
+  - negative_interactions_count
+  - positive_interactions_count
+  - sleep_hours
+  - physical_activity_min
+  - anxiety_level
+  - gender
 target:
   - mental_state
 numeric:

@@ -50,8 +50,8 @@ def from_supabase(config: DictConfig) -> pl.DataFrame:
     raw_data = pl.DataFrame(json_data)
     df = format_dataframe(df=raw_data, target_col=config.attrs.target)
     save_assets(to_save=df, path=raw_data_path, mode="parquet")
-
     print("Loading Completed")
+    return df
 
 
 def to_supabase(config: DictConfig):
