@@ -1,11 +1,13 @@
 from sklearn.model_selection import train_test_split
+from skrub import Cleaner, TableVectorizer
+from zenith.scripts.utils import save_assets
 from sklearn.pipeline import Pipeline
 from omegaconf import DictConfig
-from skrub import Cleaner, TableVectorizer
 import polars as pl
 
 
 def features_(config: DictConfig, raw_data: pl.DataFrame) -> pl.DataFrame:
+    print("Preprocessing Data")
     X, y = raw_data.select(config.attrs.features), raw_data.select(config.attrs.target)
     y = y.with_columns(
         pl.col(config.attrs.target[0])
@@ -20,10 +22,8 @@ def features_(config: DictConfig, raw_data: pl.DataFrame) -> pl.DataFrame:
     ).set_output(transform="polars")
     processed_X_train = preprocessor.fit_transform(X_train)
     processed_X_test = preprocessor.transform(X_test)
-    processed_data = {
-        "X_train": processed_X_train,
-        "X_test": processed_X_test,
-        "y_train": y_train,
-        "y_test": y_test,
-    }
-    print(f"Content of processed: {processed_data.keys()}")
+
+    save_assets(processed_X_train, config.path.processed_X_train, "parquet")
+    save_assets(processed_X_test, config.path.processed_X_test, "parquet")
+    save_assets(y_train, config.path.processed_y_train, "parquet")
+    save_assets(y_test, config.path.processed_y_test, "parquet")
