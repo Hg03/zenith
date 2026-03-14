@@ -3,5 +3,5 @@ processed_X_train: data/processed/processed_X_train.parquet
 processed_X_test: data/processed/processed_X_test.parquet
 processed_y_train: data/processed/processed_y_train.parquet
 processed_y_test: data/processed/processed_y_test.parquet
-model: artifacts/models/model.joblib
+model: artifacts/models/model.skops
 preprocessor: artifacts/preprocessor/preprocessor.skops
