@@ -30,5 +30,4 @@ RUN prek install
 EXPOSE 8000
 
 # Run FastAPI with uvicorn
-# CMD ["fastapi", "dev", "app/main.py", "--host", "0.0.0.0", "--port", "8000"]
-CMD ["/bin/bash"]
+CMD ["uvicorn", "zenith.app.inference_endpoint:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
